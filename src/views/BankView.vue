@@ -7,25 +7,32 @@
       </template>
     </NavBar>
 
-
+    <div class="main-content">
+      <!-- Menu vertical à gauche -->
+      <VerticalMenu :items="menuItems">
+        <!-- Scoped slot pour les titres -->
+        <template #menu-title="{ label }">
+          <p class="menu-title">{{ label }}</p>
+        </template>
+      </VerticalMenu>
 
       <!-- Affichage central des composants via router-view -->
       <div class="content">
         <router-view name="bankmain" />
       </div>
     </div>
-
+  </div>
 </template>
 
 <script>
 import NavBar from "@/components/navbar.vue";
-//import VerticalMenu from "@/components/VerticalMenu.vue";
+import VerticalMenu from "@/components/VerticalMenu.vue";
 
 export default {
   name: "BankView",
   components: {
     NavBar,
-    //VerticalMenu,
+    VerticalMenu,
   },
   data() {
     return {
