@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <NavBar :titles="[ {text: 'Viruses', color: 'red'} , {text: 'Compte bancaire', color: 'white'}, {text:'Login', color:'blue'}, {text:'pay', color: 'green'}, {text:'orders', color: 'red'}]"/>
+    <NavBar :links="[{'label':'Boutique', 'to':'/Shop'}, {'label':'Banque', 'to':'/bank'}]">
+      <template v-slot:button-Boutique="{ label }">
+        <span style="font-weight: bold;">{{ label }}</span>
+      </template>
+      <template v-slot:button-Banque>
+        <img src="@/assets/bank.png" alt="Logo" style="height: 30px;" />
+      </template>
+    </NavBar>
     <img alt="Vue logo" src="./assets/logo.png">
     <h1>Welcome to DrMad app</h1>
-
-    <CheckedList :data='[{nom:"dupond", prenom:"jean",age:31}, {nom:"durand", prenom:"pierre",age:35} ]' :fields="[ 'prenom', 'nom' ] " :checked="[true, false]" :itemCheck="true" :itemButton="{'show':true, 'text':'du text'}" :listButton="{'show':true, 'text':'du text2'}"></CheckedList>
-
     <router-view></router-view>
   </div>
 
@@ -15,11 +19,10 @@
 
 import {mapActions} from 'vuex'
 import NavBar from "@/components/navbar.vue";
-import CheckedList from "@/components/checkedList.vue";
 
 export default {
   name: 'App',
-  components: {CheckedList, NavBar},
+  components: {NavBar},
   methods: {
     ...mapActions('shop',['getAllViruses'])
   },
