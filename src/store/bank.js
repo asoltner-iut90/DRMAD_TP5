@@ -18,7 +18,11 @@ export default {
         updateAccountNumberError(state, error){
             state.accountNumberError = error
         },
-
+        clearCurrentAccount(state){
+            state.accountAmount = 0
+            state.accountTransactions = []
+            state.accountNumberError = 0
+        }
     },
 
     // actions = fonctions asynchrone pour mettre à jour le state, en faisant appel aux mutations, via la fonction commit()
