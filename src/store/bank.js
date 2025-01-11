@@ -49,6 +49,18 @@ export default {
                 commit('updateAccountNumberError', -1)
             }
         },
+        async createTransaction({commit}, accountNumber, amount){
+            let response = await BankService.addTransaction(accountNumber, amount);
+            if(response.error === 0) {
+                await this.getAccountTransactions({commit}, accountNumber);
+            }
+        },
+        async updateAccountAmount({commit}, accountNumber, amount){
+            let response = await BankService.updateAccountAmount(accountNumber, amount);
+            if(response.error === 0) {
+                await this.getAccountTransactions({commit}, accountNumber);
+            }
+        }
 
     }
 }

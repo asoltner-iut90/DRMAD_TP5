@@ -18,6 +18,17 @@ async function getAccountAmount(number) {
     return response
 }
 
+async function updateAccountAmount(data) {
+    let response = null;
+    try{
+        response = await  updateAccountAmount(data)
+    }
+    catch (err) {
+        response = {error: 1, status: 404, data: 'erreur réseau, impossible de modifier la valeur du compte'}
+    }
+    return response
+}
+
 function getAccountTransactionsFromLocalSource(number){
     return LocalSource.getAccountTransactions(number)
 }
@@ -26,9 +37,28 @@ async function getAccountTransactions(number) {
     return getAccountTransactionsFromLocalSource(number)
 }
 
+async function addTransactionFromLocalSource(data){
+    return LocalSource.addTransaction(data);
+}
+
+async function addTransaction(AccountNumber, amount) {
+    let data = {number:AccountNumber, amount:amount};
+    let response = null;
+    try {
+        response = await addTransactionFromLocalSource(data);
+    }catch (err) {
+        response = {error: 1, status: 404, data: 'erreur réseau'}
+    }
+    return response
+}
+
+
+
 
 
 export default{
     getAccountAmount,
     getAccountTransactions,
+    updateAccountAmount,
+    addTransaction,
 }

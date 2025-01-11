@@ -129,6 +129,28 @@ function getOrders(data) {
   return {error: 0, status: 200, data: orders || []}
 }
 
+function updateAccountAmount(data) {
+  let number = data.number;
+  let amount = data.amount;
+  let account = bankaccounts.find(e => e._id === number);
+  if (!account) return {error: 1, status: 404, data: 'account number invalid'}
+  account.amount = amount;
+}
+
+function addTransaction(data) {
+  let amount = data.amount;
+  let account = data.account;
+  let id = uuidv4()
+  let transaction = {
+    '_id': id,
+    'amount': -amount,
+    'account': account,
+    'date': { $date: new Date() },
+    'uuid': id
+  }
+  transactions.push(transaction)
+}
+
 
 export default{
   shopLogin,
@@ -141,5 +163,7 @@ export default{
   createOrder,
   cancelOrder,
   getOrders,
+  updateAccountAmount,
+  addTransaction,
 }
 
