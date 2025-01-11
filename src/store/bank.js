@@ -49,6 +49,7 @@ export default {
                 commit('updateAccountNumberError', -1)
             }
         },
+        async clearCurrentAccount({commit}){commit('clearCurrentAccount')},
 
     }
 }

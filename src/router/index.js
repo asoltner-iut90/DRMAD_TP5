@@ -6,6 +6,13 @@ import ShopLogin from "@/views/ShopLogin.vue";
 import ShopBuy from "@/views/ShopBuy.vue";
 import ShopPay from "@/views/ShopPay.vue";
 import ShopOrders from "@/views/ShopOrders.vue";
+import BankView from "@/views/BankView.vue";
+//import BankHome from "@/views/BankHome.vue";
+import BankAccount from "@/views/BankAccountView.vue";
+import BankAmount from "@/views/BankAmount.vue";
+//import BankOperation from "@/views/BankOperation.vue";
+//import BankHistory from "@/views/BankHistory.vue";
+import BankLogout from "@/views/BankLogout.vue";
 
 Vue.use(VueRouter)
 
@@ -45,7 +52,19 @@ const routes = [
     path: '/shop/orders',
     name: 'orders',
     component: ShopOrders
-  }
+  },
+  {
+    path: "/bank",
+    component: BankView,
+    children: [
+      //{ path: "home", alias: "", component: BankHome, name: "BankHome" },
+      { path: "account", component: BankAccount, name: "BankAccount" },
+      { path: "amount", component: BankAmount, name: "BankAmount" },
+      //{ path: "operation", component: BankOperation, name: "BankOperation" },
+      //{ path: "history", component: BankHistory, name: "BankHistory" },
+      { path: "logout", component: BankLogout, name: "BankLogout" },
+    ],
+  },
 
 ]
 
