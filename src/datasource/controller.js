@@ -142,7 +142,7 @@ async function createOrder(userId, orderData) {
 
   const newOrder = {
     items: orderData.items,
-    date: new Date(),
+    date: {$date: new Date().toISOString()},
     total: total,
     status: 'waiting_payment',
     uuid: uuidv4(),
