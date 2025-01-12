@@ -141,10 +141,12 @@ async function createOrder(userId, orderData) {
     date: new Date(),
     total,
     status: 'waiting_payment',
-    uuid: uuidv4()
+    uuid: uuidv4(),
+    _id: uuidv4()
   };
 
   user.orders.push(newOrder);
+  console.log(newOrder)
 
   return { error: 0, data: { uuid: newOrder.uuid } };
 }
