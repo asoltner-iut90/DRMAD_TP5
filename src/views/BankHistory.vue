@@ -12,7 +12,6 @@
     </div>
 
     <DataTable :item-check="true" :headers="headers" :items="filtered" :item-button="true" :table-button="true" @itemClicked="showDetails" @tableClicked="showSelectedDetails">
-      <template
       <template #item-button>
         Details
       </template>
