@@ -18,7 +18,7 @@
     name: 'VerticalMenu',
     methods: {
       goTo(path){
-        this.$router.push(path);
+        this.$router.push(path).catch(()=>{}) ;
       }
     },
     props: { items: Array },
