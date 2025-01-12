@@ -35,7 +35,7 @@
         filter: false,
         from:"",
         to:"",
-        headers:[{"label":"Montant", "name":"amount"}, {"label":"date", "name":"formattedDate"}, {"label":"Source/Destinataire", "name":"direction"}],
+        headers:[{"label":"Montant", "name":"amount"}, {"label":"date", "name":"date"}, {"label":"Source/Destinataire", "name":"direction"}],
       }
     },
     methods: {

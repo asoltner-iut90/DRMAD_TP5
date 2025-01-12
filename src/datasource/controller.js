@@ -190,7 +190,7 @@ function createWithdraw(data) {
     '_id': id,
     'amount': -amount,
     'account': idAccount,
-    'date': { $date: new Date() },
+    'date': { $date: new Date().toISOString() },
     'uuid': id
   }
   transactions.push(transaction)
@@ -209,7 +209,7 @@ function createPayment(data) {
   if (!destAccount) return {error: 1, status: 404, data: 'account number invalid'}
   let amount = data.amount;
 
-  let date = { $date: new Date() };
+  let date = { $date: new Date().toISOString() };
 
   let id1 = uuidv4()
   let transaction1 = {
