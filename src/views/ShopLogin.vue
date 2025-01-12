@@ -32,8 +32,8 @@ export default {
   },
   methods: {
     ...mapActions("shop",['shopLogin']),
-    logIn(params){
-      this.shopLogin(params);
+    async logIn(params){
+      await this.shopLogin(params);
       if(this.shopUser){
         router.push("/shop/buy");
       }
