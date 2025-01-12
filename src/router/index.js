@@ -6,12 +6,12 @@ import ShopLogin from "@/views/ShopLogin.vue";
 import ShopBuy from "@/views/ShopBuy.vue";
 import ShopPay from "@/views/ShopPay.vue";
 import ShopOrders from "@/views/ShopOrders.vue";
+import ShopItems from "@/views/VirusesView.vue";
 import BankView from "@/views/BankView.vue";
 import BankHome from "@/views/BankHome.vue";
 import BankAccount from "@/views/BankAccountView.vue";
 import BankAmount from "@/views/BankAmount.vue";
 import BankOperation from "@/views/BankOperation.vue";
-// import BankHistory from "@/views/BankHistory.vue"; // Assurez-vous d'avoir ce composant si nécessaire
 import BankLogout from "@/views/BankLogout.vue";
 import BankHistory from "@/views/BankHistory.vue";
 import HomeView from "@/views/HomeView.vue";
@@ -26,42 +26,19 @@ const routes = [
   },
   {
     path: '/shop',
-    name: 'shop',
-    component: ShopView
+    component: ShopView,
+    children: [
+      { path: '', component: ShopHome, name: 'ShopHome', alias: '/shop' }, // Route par défaut (alias vers /shop)
+      { path: 'items', component: ShopItems, name: 'ShopItems' },
+      { path: 'login', component: ShopLogin, name: 'ShopLogin' },
+      { path: 'buy', component: ShopBuy, name: 'ShopBuy' },
+      { path: 'pay/:orderId', component: ShopPay, name: 'ShopPayOrder' },
+      { path: 'pay', component: ShopPay, name: 'ShopPay' },
+      { path: 'orders', component: ShopOrders, name: 'ShopOrders' },
+    ],
   },
   {
-    path: '/home/home',
-    name: 'home',
-    component: ShopHome,
-    alias: '/shop'
-  },
-  {
-    path: '/shop/login',
-    name: 'login',
-    component: ShopLogin
-  },
-  {
-    path: '/shop/buy',
-    name: 'buy',
-    component: ShopBuy
-  },
-  {
-    path: '/shop/pay/:orderId',
-    name: 'pay_order_id',
-    component: ShopPay,
-  },
-  {
-    path: '/shop/pay',
-    name: 'pay',
-    component: ShopPay,
-  },
-  {
-    path: '/shop/orders',
-    name: 'orders',
-    component: ShopOrders
-  },
-  {
-    path: "/bank",
+    path: '/bank',
     component: BankView,
     children: [
       { path: "", component: BankHome, name: "BankHome" },

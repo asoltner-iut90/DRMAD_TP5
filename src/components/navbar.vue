@@ -13,7 +13,7 @@ export default {
   name: 'NavBar',
   methods: {
     goTo(path){
-      this.$router.push(path);
+      this.$router.push(path).catch(()=>{});
     }
   },
   props: { links: Array },
