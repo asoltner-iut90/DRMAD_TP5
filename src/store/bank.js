@@ -84,32 +84,24 @@ export default {
 
         async clearCurrentAccount({commit}){commit('clearCurrentAccount')},
         
-        async createWithdraw({commit}, accountId, amount){
-            let data = {idAccount:accountId, amount:amount};
+        async createWithdraw({commit, dispatch}, data){
             let response = await BankService.createWithdraw(data);
             if(response.error === 0) {
-                await this.getAccountTransactions({commit}, accountId);
+                dispatch('getAccountTransactions', data.idAccount)
                 let amount = response.data.amount;
-                commit('updateCurrentAccount', amount)
+                commit('updateAccountAmount', amount)
             }
+            return response
         },
 
-        async createPayment({commit}, accountId, amount, destNumber){
-            let data = {idAccount:accountId, amount:amount, destNumber:destNumber};
+        async createPayment({commit, dispatch}, data){
             let response = await BankService.createPayement(data);
             if(response.error === 0) {
-                await this.getAccountTransactions({commit}, accountId);
+                dispatch('getAccountTransactions', data.idAccount)
                 let amount = response.data.amount;
-                commit('updateCurrentAccount', amount)
+                commit('updateAccountAmount', amount)
             }
+            return response
         },
-
-        async updateAccountAmount({commit}, accountNumber, amount){
-            let response = await BankService.updateAccountAmount(accountNumber, amount);
-            if(response.error === 0) {
-                await this.getAccountTransactions({commit}, accountNumber);
-            }
-        }
-
     }
 }

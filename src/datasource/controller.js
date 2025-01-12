@@ -183,7 +183,7 @@ function createWithdraw(data) {
   if(!amount) return {error: 1, status: 404, data: 'amount mismatch' }
   let idAccount = data.idAccount;
   if(!idAccount) return {error: 1, status: 404, data: 'account id invalid'}
-  let account = shopusers.find(u => u._id === idAccount);
+  let account = bankaccounts.find(u => u._id === idAccount);
   if (!account) return {error: 1, status: 404, data: 'account id invalid'}
   let id = uuidv4()
   let transaction = {
@@ -205,7 +205,7 @@ function createPayment(data) {
   if (!account) return {error: 1, status: 404, data: 'account id invalid'}
   let destNumber = data.destNumber;
   if(!destNumber) return {error: 1, status: 404, data: 'account number missing'}
-  let destAccount = shopusers.find(u => u.number === destNumber);
+  let destAccount = bankaccounts.find(u => u.number === destNumber);
   if (!destAccount) return {error: 1, status: 404, data: 'account number invalid'}
   let amount = data.amount;
 
