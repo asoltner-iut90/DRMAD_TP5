@@ -2,11 +2,11 @@
   <div class="shop-pay">
     <h1>Paiement</h1>
 
-    <input v-model="currentOrderId" required placeholder="Order ID" />
+    <input v-model="currentOrderUUID" required placeholder="Order ID" />
 
     <div v-if="currentOrder">
       <p><strong>Total :</strong> {{ currentOrder.total }} €</p>
-      <p><strong>Date :</strong> {{ new Date(currentOrder.date).toLocaleDateString('fr-FR') }}</p>
+      <p><strong>Date :</strong> {{ new Date(currentOrder.date.$date).toLocaleDateString('fr-FR') }}</p>
     </div>
 
     <input v-model="transactionId" required placeholder="Transaction ID" />
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      currentOrderId: this.orderId || '',
+      currentOrderUUID: this.orderId || '',
       transactionId: '',  // Ajout du champ transactionId
       error: '',
     };
@@ -38,13 +38,13 @@ export default {
     ...mapState('shop', ['shopUser']),
     currentOrder() {
       // Trouve la commande correspondant à l'orderId actuel
-      return this.shopUser?.orders?.find(order => order._id === this.currentOrderId) || null;
+      return this.shopUser?.orders?.find(order => order.uuid === this.currentOrderUUID) || null;
     },
   },
   methods: {
     async payOrder() {
       let data = {
-        orderId: this.currentOrderId,
+        orderId: this.currentOrderUUID,
         userId: this.shopUser._id,
         transactionId: this.transactionId,
       };
@@ -61,7 +61,7 @@ export default {
     },
   },
   mounted() {
-    this.currentOrderId = this.$route.params.orderId;
+    this.currentOrderUUID = this.$route.params.orderId;
   },
 };
 </script>

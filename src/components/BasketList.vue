@@ -46,6 +46,7 @@ export default {
       const orderData = { items: this.basket };
 
       const response = await ShopService.CreateOrder(this.shopUser._id, orderData);
+      console.log(response);
 
       if (response.error === 0 && response.data && response.data.uuid) {
         await this.clearBasket();

@@ -3,9 +3,9 @@
     <h2>Orders</h2>
     <ul v-if="shopUser && shopUser.orders.length > 0">
       <li v-for="(order, order_id) in shopUser.orders" :key="order_id" class="order-item">
-        <p>OrderId: {{ order._id }}, Total: {{ order.total }}€, Etat: {{ order.status }}</p>
+        <p>UUID: {{ order.uuid }}, Total: {{ order.total }}€, Etat: {{ order.status }}</p>
         <div v-if="order.status === 'waiting_payment'" class="order-actions">
-          <button @click="$router.push('/shop/pay/'.concat(order._id))" class="pay-button">Payer</button>
+          <button @click="$router.push('/shop/pay/'.concat(order.uuid))" class="pay-button">Payer</button>
           <button @click="cancel(order._id)" class="cancel-button">Annuler</button>
         </div>
       </li>
