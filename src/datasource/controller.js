@@ -201,7 +201,7 @@ function createWithdraw(data) {
 function createPayment(data) {
   let idAccount = data.idAccount;
   if(!idAccount) return {error: 1, status: 404, data: 'account id missing'}
-  let account = shopusers.find(u => u._id === idAccount);
+  let account = bankaccounts.find(u => u._id === idAccount);
   if (!account) return {error: 1, status: 404, data: 'account id invalid'}
   let destNumber = data.destNumber;
   if(!destNumber) return {error: 1, status: 404, data: 'account number missing'}

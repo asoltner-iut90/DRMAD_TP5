@@ -12,6 +12,7 @@
     </div>
 
     <DataTable :item-check="true" :headers="headers" :items="filtered" :item-button="true" :table-button="true" @itemClicked="showDetails" @tableClicked="showSelectedDetails">
+      <template
       <template #item-button>
         Details
       </template>
@@ -67,7 +68,9 @@
     },
     computed: {
       ...mapState('bank', ["accountTransactions", "currentAccount"]),
-
+      balanceClass() {
+        return this.currentAccount.amount >= 0 ? 'positive' : 'negative';
+      },
       filtered(){
         let result = [];
         for(let transaction of this.accountTransactions){
@@ -84,7 +87,7 @@
                   (!this.to || transaction.date <= this.to);
             });
         }
-        result.sort((a, b) => new Date(a.date) - new Date(b.date));
+        result.sort((b,a) => new Date(a.date) - new Date(b.date));
         return result;
       },
     },
@@ -95,6 +98,15 @@
 </script>
 
 <style scoped>
+
+.positive {
+  color: #28a745;
+}
+
+.negative {
+  color: #dc3545;
+}
+
 .bank-history {
   padding: 20px;
   background-color: #fff;
