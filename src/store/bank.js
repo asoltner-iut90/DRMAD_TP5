@@ -18,6 +18,9 @@ export default {
         updateAccountTransactions(state, transactions){
             state.accountTransactions = transactions
         },
+        updateAccountAmount(state, amount){
+            state.currentAccount.amount = amount;
+        },
         updateAccountNumberError(state, error){
             state.accountNumberError = error
         },
@@ -81,12 +84,26 @@ export default {
 
         async clearCurrentAccount({commit}){commit('clearCurrentAccount')},
         
-        async createTransaction({commit}, accountNumber, amount){
-            let response = await BankService.addTransaction(accountNumber, amount);
+        async createWithdraw({commit}, accountId, amount){
+            let data = {idAccount:accountId, amount:amount};
+            let response = await BankService.createWithdraw(data);
             if(response.error === 0) {
-                await this.getAccountTransactions({commit}, accountNumber);
+                await this.getAccountTransactions({commit}, accountId);
+                let amount = response.data.amount;
+                commit('updateCurrentAccount', amount)
             }
         },
+
+        async createPayment({commit}, accountId, amount, destNumber){
+            let data = {idAccount:accountId, amount:amount, destNumber:destNumber};
+            let response = await BankService.createPayement(data);
+            if(response.error === 0) {
+                await this.getAccountTransactions({commit}, accountId);
+                let amount = response.data.amount;
+                commit('updateCurrentAccount', amount)
+            }
+        },
+
         async updateAccountAmount({commit}, accountNumber, amount){
             let response = await BankService.updateAccountAmount(accountNumber, amount);
             if(response.error === 0) {

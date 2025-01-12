@@ -60,32 +60,37 @@ function getAccountTransactionsByNumber(data){
     return LocalSource.getAccountTransactionsByNumber(data)
 }
 
-async function addTransactionFromLocalSource(data){
-    return LocalSource.addTransaction(data);
-}
 
-async function addTransaction(AccountNumber, amount) {
-    console.log(AccountNumber);
-    console.log(amount);
-
-    let data = { account: AccountNumber, amount: amount };
+async function createWithdraw(data) {
     let response = null;
 
     try {
-        response = await addTransactionFromLocalSource(data); // Appel du controller
-        console.log(response);
-    } catch (err) {
-        response = { error: 1, status: 404, data: 'erreur réseau' };
+        response = await LocalSource.createWithdraw(data);
+    }catch (err) {
+        response = {error: 1, status: 404, data: 'erreur réseau'}
+    }
+    return response
+}
+
+async function createPayement(data){
+    let response = null;
+    try {
+        response = await LocalSource.createPayment(data);
+    }catch (err) {
+        response = {error: 1, status: 404, data: 'erreur réseau'}
     }
 
     return response;
 }
 
 
+
+
 export default{
     getAccountAmount,
     getAccountTransactions,
-    addTransaction,
+    createWithdraw,
     getAccount,
     getAccountTransactionsByNumber,
+    createPayement,
 }

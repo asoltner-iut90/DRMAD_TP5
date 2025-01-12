@@ -176,29 +176,65 @@ function updateAccountAmount(data) {
   account.amount = amount;
 }
 
-function addTransaction(data) {
+function createWithdraw(data) {
   let amount = data.amount;
-  let account = bankaccounts.find(b => b.number === data.account);
-  console.log('Account:', account);
-  let id = uuidv4();
-
+  if(!amount) return {error: 1, status: 404, data: 'amount mismatch' }
+  let idAccount = data.idAccount;
+  if(!idAccount) return {error: 1, status: 404, data: 'account id invalid'}
+  let account = shopusers.find(u => u._id === idAccount);
+  if (!account) return {error: 1, status: 404, data: 'account id invalid'}
+  let id = uuidv4()
   let transaction = {
     '_id': id,
-    'amount': amount,
-    'account': account._id,
+    'amount': -amount,
+    'account': idAccount,
     'date': { $date: new Date() },
     'uuid': id
-  };
+  }
+  transactions.push(transaction)
+  account.amount -= amount;
+  return { error: 0, status: 200, data: {amount:account.amount, uuid: id} }
+}
 
-  transactions.push(transaction);
-  console.log('Transaction added:', transaction);
-  console.log('Transactions:', transactions);
-  // Retourne un objet avec les détails de la transaction
-  return {
-    error: 0,
-    status: 200,
-    data: { uuid: id, amount: amount }
-  };
+function createPayment(data) {
+  let idAccount = data.idAccount;
+  if(!idAccount) return {error: 1, status: 404, data: 'account id missing'}
+  let account = shopusers.find(u => u._id === idAccount);
+  if (!account) return {error: 1, status: 404, data: 'account id invalid'}
+  let destNumber = data.destNumber;
+  if(!destNumber) return {error: 1, status: 404, data: 'account number missing'}
+  let destAccount = shopusers.find(u => u.number === destNumber);
+  if (!destAccount) return {error: 1, status: 404, data: 'account number invalid'}
+  let amount = data.amount;
+
+  let date = { $date: new Date() };
+
+  let id1 = uuidv4()
+  let transaction1 = {
+    '_id': id1,
+    'amount': -amount,
+    'account': idAccount,
+    'date': date,
+    'uuid': id1,
+    'destination':destAccount._id
+  }
+
+  let id2 = uuidv4()
+  let transaction2 = {
+    '_id': id2,
+    'amount': amount,
+    'account': destAccount._id,
+    'date': date,
+    'uuid': id2
+  }
+
+  account.amount -= amount;
+  destAccount.amount += amount;
+
+  transactions.push(transaction1)
+  transactions.push(transaction2)
+
+  return { error: 0, status: 200, data: {amount:account.amount, uuid:id1} }
 
 }
 
@@ -216,8 +252,9 @@ export default{
   cancelOrder,
   getOrders,
   updateAccountAmount,
-  addTransaction,
+  createWithdraw,
   getAccount,
   getAccountTransactionsByNumber,
+  createPayment,
 }
 
