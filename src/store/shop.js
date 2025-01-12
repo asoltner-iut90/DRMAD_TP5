@@ -58,6 +58,10 @@ export default {
                 commit('updateLoginError', response.data)
             }
         },
+        async shopLogout({ commit }) {
+            commit('updateShopUser', null);
+            commit('updateBasket', []);
+                },
 
         async getBasket({ commit, state }) {
             console.log('Récupération du panier');
