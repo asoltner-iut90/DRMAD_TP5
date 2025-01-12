@@ -15,7 +15,7 @@ export default {
   mounted() {
     setTimeout(async () => {
       await this.clearCurrentAccount();
-      this.$router.push('/bank/home');
+      await this.$router.push('/bank');
     }, 1000);
   },
 };
