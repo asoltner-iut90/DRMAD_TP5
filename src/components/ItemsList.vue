@@ -25,11 +25,11 @@
 
     <checked-list
         :data="computedFilter()"
-        :fields="[ 'name', 'price', 'promotionText' ]"
+        :fields="[ 'name', 'price', 'promotion' ]"
         :itemCheck="true"
         :itemButton="{ 'show': true, 'text': 'Ajouter au panier' }"
         :listButton="{ 'show': true, 'text': 'Ajouter sélection au panier' }"
-        :checked="Array.from({ length: viruses.length }, () => false)"
+        :checked="computedSelectedViruses()"
         :itemAmount="true"
         @item-button-clicked="itemButtonClicked"
         @list-button-clicked="listButtonChecked"
@@ -57,6 +57,7 @@ export default {
     filterNameActive: false,
     filterStockActive: false,
     filteredViruses: [],
+    selectedViruses: [],
   }),
   computed: {
     ...mapState("shop", ['viruses', 'basket']), // Ajout de 'basket' pour afficher le contenu du panier
@@ -99,7 +100,7 @@ export default {
       if(this.filterPriceActive){
         if (this.priceFilter >0 ) viruses = viruses.filter(v => v.price < this.priceFilter)
       }
-
+      /*
       let filtered = [];
       for (let item of viruses) {
         let data = {
@@ -124,14 +125,35 @@ export default {
         filtered.push(data);
       }
 
-      this.filteredViruses = filtered;
-      return filtered;
+       */
+
+      this.filteredViruses = viruses;
+      return viruses;
     },
 
-    checkedChanged(index) {
-      console.log("Changement de l'état de sélection pour l'élément :", index);
-    }
+    checkedChanged(index){
+      console.log("test checked changed: ", index)
+      let realIndex = this.viruses.indexOf(this.computedFilter()[index])
+      if(this.selectedViruses.includes(realIndex)){
+        this.selectedViruses = this.selectedViruses.filter(i => i !== realIndex)
+      } else{
+        this.selectedViruses.push(realIndex)
+      }
+    },
+
+    computedSelectedViruses(){
+      let filteredViruses = this.computedFilter()
+      let selected = new Array(filteredViruses.length).fill(false)
+      this.selectedViruses.forEach(index => {
+        var newIndex = filteredViruses.indexOf(this.viruses[index])
+        if(newIndex !== -1) selected[newIndex] = true
+      })
+      return selected
+    },
   },
+
+
+
   mounted(){
     this.computedFilter()
   }

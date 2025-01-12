@@ -55,20 +55,7 @@ export default {
             }
             return null
         },
-        /*
-        async getAccountAmount({commit}, data) {
-            console.log('recupération de la valeur du compte');
-            let response = await BankService.getAccountAmount(data)
-            if (response.error === 0) {
-                commit('updateAccountAmount', response.data)
-                commit('updateAccountNumberError', 1)
-            }
-            else {
-                commit('updateAccountNumberError', -1)
-            }
-        },
 
-         */
 
         async getAccount({commit}, data) {
             console.log('recupération de le compte');

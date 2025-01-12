@@ -76,6 +76,7 @@
   width: 100%;
   border-collapse: collapse;
   text-align: center;
+  color: black;
 }
 
 .table-header, .select-header, .actions-header {

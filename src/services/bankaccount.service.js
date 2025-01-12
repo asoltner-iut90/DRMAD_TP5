@@ -1,23 +1,5 @@
 import LocalSource from "@/datasource/controller";
 
-
-function getAccountAmountFromLocalSource(number){
-    return LocalSource.getAccountAmount(number)
-}
-
-async function getAccountAmount(number) {
-    let response = null;
-    try {
-        // changer la méthode appelée quand cette fonctionnalité l'API est prête
-        response = await  getAccountAmountFromLocalSource(number)
-    }
-        // NB: le catch n'aura lieu que pour des requête vers l'API, s'il y a une erreur réseau
-    catch (err) {
-        response = {error: 1, status: 404, data: 'erreur réseau, impossible de récupérer la valeur du compte'}
-    }
-    return response
-}
-
 async function getAccountFromLocalSource(number){
     return LocalSource.getAccount(number);
 }
@@ -33,22 +15,7 @@ async function getAccount(number){
     return response
 }
 
-
-/*
-async function updateAccountAmount(data) {
-    let response = null;
-    try{
-        response = await  updateAccountAmount(data)
-    }
-    catch (err) {
-        response = {error: 1, status: 404, data: 'erreur réseau, impossible de modifier la valeur du compte'}
-    }
-    return response
-}
-
- */
-
-function getAccountTransactionsFromLocalSource(id){
+async function getAccountTransactionsFromLocalSource(id){
     return LocalSource.getAccountTransactions(id)
 }
 
@@ -56,27 +23,40 @@ async function getAccountTransactions(id) {
     return getAccountTransactionsFromLocalSource(id)
 }
 
-function getAccountTransactionsByNumber(data){
+async function getAccountTransactionsByNumberFromLocalSource(data){
     return LocalSource.getAccountTransactionsByNumber(data)
+
 }
 
+async function getAccountTransactionsByNumber(data){
+    return getAccountTransactionsByNumberFromLocalSource(data)
+}
+
+async function createWithdrawFromLocalSource(data){
+    return LocalSource.createWithdraw(data);
+}
 
 async function createWithdraw(data) {
     let response = null;
 
     try {
-        response = await LocalSource.createWithdraw(data);
+        response = await createWithdrawFromLocalSource(data);
     }catch (err) {
         response = {error: 1, status: 404, data: 'erreur réseau'}
     }
     return response
 }
 
+async function createPayementFromLocalSource(data){
+    return await LocalSource.createPayment(data)
+}
+
 async function createPayement(data){
     let response = null;
     try {
-        response = await LocalSource.createPayment(data);
+        response = await createPayementFromLocalSource(data);
     }catch (err) {
+        console.log(err)
         response = {error: 1, status: 404, data: 'erreur réseau'}
     }
 
@@ -87,7 +67,6 @@ async function createPayement(data){
 
 
 export default{
-    getAccountAmount,
     getAccountTransactions,
     createWithdraw,
     getAccount,
