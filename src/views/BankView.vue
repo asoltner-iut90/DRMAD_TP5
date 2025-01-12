@@ -1,7 +1,7 @@
 <template>
   <div class="bank-view">
     <!-- Barre de navigation en haut -->
-    <NavBar :links="navLinks">
+    <NavBar :links="getNavLinks()">
       <template #nav-button="{ label }">
         <button>{{ label }}</button>
       </template>
@@ -37,15 +37,21 @@ export default {
     NavBar,
     VerticalMenu,
   },
+  methods: {
+    getNavLinks() {
+      if (this.currentAccount) {
+        return [{ label: "Déconnexion", to: "/bank/logout" }];
+      }else{
+        return [{ label: "Mon compte", to: "/bank/account" }];
+      }
+    }
+  },
   computed: {
     ...mapState("bank", ["currentAccount"]),
+
   },
   data() {
     return {
-      // Liens de la barre de navigation
-      navLinks: [
-        { label: "Mon compte", to: "/bank/account" },
-      ],
       // Items du menu vertical
       menuItems: [
         { type: "title", label: "Opérations" },
