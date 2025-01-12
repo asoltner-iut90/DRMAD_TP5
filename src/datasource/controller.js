@@ -67,13 +67,35 @@ function getAccountTransactions(number){
 function payOrder(data) {
   let orderId = data.orderId;
   let userId = data.userId;
-  if(!orderId) return {error: 1, status: 404, data: 'orderId invalid'}
-  if(!userId) return {error: 1, status: 404, data: 'user id invalid'}
+  let transactionId = data.transactionId;  // Transaction ID fourni par l'utilisateur
+
+  if (!orderId) return { error: 1, status: 404, data: 'orderId invalid' };
+  if (!userId) return { error: 1, status: 404, data: 'userId invalid' };
+  if (!transactionId) return { error: 1, status: 404, data: 'transactionId invalid' };
+
   let user = shopusers.find(e => e._id === userId);
-  if (!user) return {error: 1, status: 404, data: 'user id invalid'}
+  if (!user) return { error: 1, status: 404, data: 'User not found' };
+
   let order = user.orders.find(e => e._id === orderId);
-  order.status = 'finalized'
-  return {error: 0, status: 200, data: order}
+  if (!order) return { error: 1, status: 404, data: 'Order not found' };
+
+  let orderTotal = order.total;
+
+  let transaction = transactions.find(t => t.transactionId === transactionId);  // Liste des transactions bancaires
+  if (!transaction) return { error: 1, status: 404, data: 'Transaction not found' };
+
+  if (transaction.amount !== -orderTotal) {
+    return { error: 1, status: 400, data: 'Transaction amount mismatch' };
+  }
+
+  const shopAccountId = "65d721c44399ae9c8321832c";  // L'ID du compte de la boutique
+  if (transaction.destination !== shopAccountId) {
+    return { error: 1, status: 400, data: 'Transaction destination mismatch' };
+  }
+
+  order.status = 'finalized';
+
+  return { error: 0, status: 200, data: order };
 }
 async function createOrder(userId, orderData) {
   const user = shopusers.find(u => u._id === userId);

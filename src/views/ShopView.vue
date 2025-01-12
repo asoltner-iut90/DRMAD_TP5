@@ -1,14 +1,17 @@
-<script setup>
-
-</script>
-
 <template>
   <div>
-    <h1>Boutique</h1>
-    <router-view name="shopmain"></router-view>
-  </div>
-</template>
+     <h1>Boutique</h1>
+     <router-view></router-view>
+   </div>
+ </template>
+ <script>
+ //import NavBar from "@/components/navbar.vue";
+ export default {
+   name: 'ShopView',
+   //components: {NavBar},
+ }
 
-<style scoped>
+ </script>
+ <style scoped>
 
-</style>
+ </style>
