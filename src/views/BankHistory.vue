@@ -54,8 +54,17 @@
 
       showSelectedDetails(transactions){
         let content = "";
+        if (transactions.length === 0) {
+          alert("Aucune transaction sélectionnée");
+          return;
+        }
+        else if (transactions.length === 1) {
+          content = "UUID copié dans le presse-papier :\n";
+          navigator.clipboard.writeText(transactions[0].uuid);
+        }
         for(let transaction of transactions){
           content += transaction.uuid+"\n";
+          navigator.clipboard.writeText(transaction.uuid);
         }
         alert(content);
       },

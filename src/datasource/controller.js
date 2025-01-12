@@ -98,7 +98,7 @@ function payOrder(data) {
 
   let orderTotal = order.total;
 
-  let transaction = transactions.find(t => t.transactionId === transactionId);  // Liste des transactions bancaires
+  let transaction = transactions.find(t => t.uuid === transactionId);  // Liste des transactions bancaires
   if (!transaction) return { error: 1, status: 404, data: 'Transaction not found' };
 
   if (transaction.amount !== -orderTotal) {
