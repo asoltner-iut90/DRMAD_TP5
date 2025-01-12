@@ -35,8 +35,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import bankService from "@/services/bankaccount.service";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "BankOperation",
@@ -53,31 +52,28 @@ export default {
     ...mapState('bank', ['currentAccount']), // Récupération du compte courant depuis le store
   },
   methods: {
+    ...mapActions('bank', ["createWithdraw", "createPayment"]),
     async validateOperation() {
-      if (!this.amount || (this.hasRecipient && !this.recipient)) {
-        this.errorMessage = "Veuillez saisir un montant valide et un destinataire si nécessaire.";
-        setTimeout(() => (this.errorMessage = ""), 5000);
-        return;
+    if (!this.amount || (this.hasRecipient && !this.recipient)) {
+      this.errorMessage = "Veuillez saisir un montant valide et un destinataire si nécessaire.";
+      setTimeout(() => (this.errorMessage = ""), 5000);
+      return;
+    }
+      let response = null;
+
+      if (this.recipient && this.hasRecipient) {
+        response = await  this.createPayment({idAccount:this.currentAccount._id,amount: this.amount,destNumber: this.recipient});
+      }else{
+        response = await this.createWithdraw({idAccount:this.currentAccount._id, amount: this.amount});
       }
 
-      if (this.hasRecipient){
-        this.amount = -this.amount;
-      }
-      try {
-        const response = await bankService.addTransaction(
-            this.recipient ? this.recipient : this.currentAccount.number,
-            this.amount
-        );
-
-        if (response.error) {
-          throw new Error(response.data);
-        }
-
+      if (response.error) {
+         this.errorMessage = response.data;
+      }else{
         this.successMessage = `L'opération est validée avec le n° : ${response.data.uuid}. Vous pouvez la retrouver dans l'historique.`;
-        setTimeout(() => (this.successMessage = ""), 5000);
-      } catch (error) {
-        setTimeout(() => (this.errorMessage = ""), 5000);
       }
+      setTimeout(() => (this.successMessage = ""), 5000);
+      setTimeout(() => (this.errorMessage = ""), 5000);
       this.amount = null;
       this.hasRecipient = false;
       this.recipient = "";
