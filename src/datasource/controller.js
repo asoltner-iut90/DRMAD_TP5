@@ -82,18 +82,18 @@ function getAccountTransactionsByNumber(data){
 
 
 function payOrder(data) {
-  let orderId = data.orderId;
+  let uuid = data.orderId;
   let userId = data.userId;
   let transactionId = data.transactionId;  // Transaction ID fourni par l'utilisateur
 
-  if (!orderId) return { error: 1, status: 404, data: 'orderId invalid' };
+  if (!uuid) return { error: 1, status: 404, data: 'orderId invalid' };
   if (!userId) return { error: 1, status: 404, data: 'userId invalid' };
   if (!transactionId) return { error: 1, status: 404, data: 'transactionId invalid' };
 
   let user = shopusers.find(e => e._id === userId);
   if (!user) return { error: 1, status: 404, data: 'User not found' };
 
-  let order = user.orders.find(e => e._id === orderId);
+  let order = user.orders.find(e => e.uuid === uuid);
   if (!order) return { error: 1, status: 404, data: 'Order not found' };
 
   let orderTotal = order.total;
@@ -143,14 +143,13 @@ async function createOrder(userId, orderData) {
   const newOrder = {
     items: orderData.items,
     date: new Date(),
-    total,
+    total: total,
     status: 'waiting_payment',
     uuid: uuidv4(),
     _id: uuidv4()
   };
 
   user.orders.push(newOrder);
-  console.log(newOrder)
 
   return { error: 0, data: { uuid: newOrder.uuid } };
 }

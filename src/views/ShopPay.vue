@@ -49,6 +49,8 @@ export default {
         transactionId: this.transactionId,
       };
 
+      console.log(data)
+
       let result = await ShopService.payOrder(data);
 
       if (result.error) {
