@@ -4,6 +4,11 @@
 
     <input v-model="currentOrderId" required placeholder="Order ID" />
 
+    <div v-if="currentOrder">
+      <p><strong>Total :</strong> {{ currentOrder.total }} €</p>
+      <p><strong>Date :</strong> {{ new Date(currentOrder.date).toLocaleDateString('fr-FR') }}</p>
+    </div>
+
     <input v-model="transactionId" required placeholder="Transaction ID" />
 
     <button @click="payOrder">Payer</button>
@@ -18,9 +23,6 @@ import { mapState } from "vuex";
 import router from "@/router";
 
 export default {
-  computed: {
-    ...mapState('shop', ['shopUser']),
-  },
   name: 'ShopPay',
   props: {
     orderId: String,
@@ -31,6 +33,13 @@ export default {
       transactionId: '',  // Ajout du champ transactionId
       error: '',
     };
+  },
+  computed: {
+    ...mapState('shop', ['shopUser']),
+    currentOrder() {
+      // Trouve la commande correspondant à l'orderId actuel
+      return this.shopUser?.orders?.find(order => order._id === this.currentOrderId) || null;
+    },
   },
   methods: {
     async payOrder() {
