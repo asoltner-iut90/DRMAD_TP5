@@ -23,7 +23,7 @@
             {{item[header.name]}}
           </td>
           <td v-if="itemButton">
-            <button @click="emitItemButton(index)">
+            <button @click="emitItemButton(item)">
               <slot name="item-button" :item="item">
                 Action
               </slot>
@@ -42,8 +42,6 @@
 </template>
 
 <script>
-  import {items} from "@/datasource/data";
-
   export default {
     name: 'DataTable',
     props: {
@@ -60,16 +58,20 @@
       }
     },
     methods: {
-      emitItemButton(index){
-        this.$emit('itemClicked',items[index]);
+      emitItemButton(item){
+        this.$emit('itemClicked',item);
       },
       emitTableButton(){
-        this.emit("tableClicked", this.selectedItems);
+        this.$emit("tableClicked", this.selectedItems);
       }
     }
   }
 </script>
 
 <style scoped>
+
+table{
+  text-align: center;
+}
 
 </style>

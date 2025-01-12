@@ -54,6 +54,13 @@ function getAccountAmount(number){
   return {error: 0, status: 404, data:account.amount};
 }
 
+function getAccount(number){
+  if(!number) return {error:1, status: 404,data:"aucun nombre fourni"}
+  let account = bankaccounts.find(e => e.number === number)
+  if (!account) return {error: 1, status: 404, data: 'account number invalid'}
+  return {error: 0, status: 404, data:account};
+}
+
 function getAccountTransactions(number){
   if(!number) return {error:1, status: 404,data:"aucun nombre fourni"}
   let account = bankaccounts.find(e => e.number === number)
@@ -63,6 +70,7 @@ function getAccountTransactions(number){
   if (!list) return {error: 1, status: 404, data: 'account number invalid'}
   return {error: 0, status: 404, data:list};
 }
+
 
 function payOrder(data) {
   let orderId = data.orderId;
@@ -187,5 +195,6 @@ export default{
   getOrders,
   updateAccountAmount,
   addTransaction,
+  getAccount
 }
 

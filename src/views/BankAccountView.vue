@@ -3,8 +3,8 @@
     <h1>Account</h1>
     <span>Account Number</span><br><input v-model="accountNumber"><br>
     <p v-if="accountNumberError == -1">Numéro de compte erroné</p>
-    <button @click="getAccountAmount(accountNumber)" :disabled="!isValidFormat()">Login</button><br>
-    <p v-if="accountNumberError==1">{{accountAmount}}</p><br>
+    <button @click="getAccount(accountNumber)" :disabled="!isValidFormat()">Login</button><br>
+    <p v-if="accountNumberError==1">{{currentAccount.amount}}</p><br>
     <button @click="getAccountTransactions(accountNumber)" :disabled="!isValidFormat()">Transactions</button>
     <ul v-if="accountNumberError==1">
       <li v-for="(transaction, index) in accountTransactions" :key="index"> {{transformation(transaction.date.$date)}} : {{transaction.amount}}</li>
@@ -22,10 +22,10 @@ export default {
     accountNumber: '',
   }),
   computed: {
-    ...mapState('bank', ['accountAmount', "accountTransactions", "accountNumberError"])
+    ...mapState('bank', ['currentAccount', "accountTransactions", "accountNumberError"])
   },
   methods: {
-    ...mapActions("bank",['getAccountAmount', "getAccountTransactions"]),
+    ...mapActions("bank",['getAccount', "getAccountTransactions"]),
     ...mapMutations("bank",['updateAccountNumberError']),
     transformation(dateString){
       let date = new Date(dateString);

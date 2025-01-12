@@ -3,23 +3,29 @@ import BankService from "@/services/bankaccount.service";
 export default {
     namespaced: true,
     state: {
-        accountAmount: 0,
         accountTransactions: [],
         accountNumberError :0,
+        currentAccount:null,
     },
 
     mutations:{
+        /*
         updateAccountAmount(state, amount){
             state.accountAmount = amount
         },
+
+         */
         updateAccountTransactions(state, transactions){
             state.accountTransactions = transactions
         },
         updateAccountNumberError(state, error){
             state.accountNumberError = error
         },
+        updateCurrentAccount(state, account){
+            state.currentAccount = account
+        },
         clearCurrentAccount(state){
-            state.accountAmount = 0
+            state.currentAccount = null;
             state.accountTransactions = []
             state.accountNumberError = 0
         }
@@ -31,13 +37,14 @@ export default {
             console.log('recupération des transactions du compte');
             let response = await BankService.getAccountTransactions(data)
             if (response.error === 0) {
+                console.log(response.data)
                 commit('updateAccountTransactions', response.data)
                 commit('updateAccountNumberError', 1)
             }
             else {
                 commit('updateAccountNumberError', -1)}
         },
-
+        /*
         async getAccountAmount({commit}, data) {
             console.log('recupération de la valeur du compte');
             let response = await BankService.getAccountAmount(data)
@@ -49,6 +56,21 @@ export default {
                 commit('updateAccountNumberError', -1)
             }
         },
+
+         */
+
+        async getAccount({commit}, data) {
+            console.log('recupération de le compte');
+            let response = await BankService.getAccount(data)
+            if (response.error === 0) {
+                commit('updateCurrentAccount', response.data)
+                commit('updateAccountNumberError', 1)
+            }
+            else {
+                commit('updateAccountNumberError', -1)
+            }
+        },
+
         async clearCurrentAccount({commit}){commit('clearCurrentAccount')},
         
         async createTransaction({commit}, accountNumber, amount){

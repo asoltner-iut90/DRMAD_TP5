@@ -18,6 +18,23 @@ async function getAccountAmount(number) {
     return response
 }
 
+async function getAccountFromLocalSource(number){
+    return LocalSource.getAccount(number);
+}
+
+async function getAccount(number){
+    let response = null;
+    try {
+        response = await  getAccountFromLocalSource(number)
+    }
+    catch (err) {
+        response = {error: 1, status: 404, data: 'erreur réseau, impossible de récupérer le compte'}
+    }
+    return response
+}
+
+
+
 async function updateAccountAmount(data) {
     let response = null;
     try{
@@ -61,4 +78,5 @@ export default{
     getAccountTransactions,
     updateAccountAmount,
     addTransaction,
+    getAccount,
 }
