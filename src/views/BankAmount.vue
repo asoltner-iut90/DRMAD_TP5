@@ -1,7 +1,7 @@
 <template>
   <div class="bank-amount">
-    <slot name="account-amount" :balance="balance">
-      <p :class="balanceClass">{{ balance }} €</p>
+    <slot name="account-amount">
+      <p :class="balanceClass">{{ currentAccount.amount }} €</p>
     </slot>
   </div>
 </template>
@@ -11,18 +11,10 @@ import {mapState} from "vuex";
 
 export default {
   name: "BankAmount",
-  methods: {
-    ...mapState('bank', ['accountAmount']),
-  },
-  props: {
-    balance: {
-      type: Number,
-      required: true,
-    },
-  },
   computed: {
+    ...mapState('bank', ['currentAccount']),
     balanceClass() {
-      return this.accountAmount >= 0 ? 'positive' : 'negative';
+      return this.currentAccount.amount >= 0 ? 'positive' : 'negative';
     },
   },
 };

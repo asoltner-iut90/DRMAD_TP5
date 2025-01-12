@@ -14,6 +14,9 @@
         <template #menu-title="{ label }">
           <p class="menu-title">{{ label }}</p>
         </template>
+        <template v-slot:menu-link="{ label }">
+          <button class="menu-button" :disabled="!currentAccount">{{ label }}</button>
+        </template>
       </VerticalMenu>
 
       <div class="content">
@@ -26,12 +29,16 @@
 <script>
 import NavBar from "@/components/navbar.vue";
 import VerticalMenu from "@/components/VerticalMenu.vue";
+import {mapState} from "vuex";
 
 export default {
   name: "BankView",
   components: {
     NavBar,
     VerticalMenu,
+  },
+  computed: {
+    ...mapState("bank", ["currentAccount"]),
   },
   data() {
     return {
