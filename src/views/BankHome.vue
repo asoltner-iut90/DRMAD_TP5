@@ -11,4 +11,19 @@ export default {
 </script>
 
 <style scoped>
+.bank-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+  color: #333;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #007bff;
+}
 </style>

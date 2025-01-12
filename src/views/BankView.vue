@@ -70,6 +70,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  color: #f4f4f4;
 }
 
 .main-content {

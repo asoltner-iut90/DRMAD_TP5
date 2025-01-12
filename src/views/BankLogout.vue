@@ -23,8 +23,17 @@ export default {
 
 <style scoped>
 .bank-logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #721c24;
+  font-size: 1.2rem;
+  font-weight: bold;
   text-align: center;
-  margin-top: 50px;
-  font-size: 20px;
+}
+
+p {
+  margin: 0;
 }
 </style>
