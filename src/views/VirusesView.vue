@@ -1,30 +1,35 @@
 <template>
-  <div>
-    <h1>Les virus</h1>
-    <p>Le tableau dans le store : {{ viruses }}</p>
-    <p>sous forme de liste avec certains champs</p>
+  <div class="viruses-view">
+    <h1 class="page-title">Les virus</h1>
+    <p class="table-description">Le tableau dans le store : {{ viruses }}</p>
+    <p class="filter-description">Sous forme de liste avec certains champs</p>
+
     <span>Filtres :</span>
-    <br><input type="checkbox" v-model="filterPriceActive" id="filterpriceactive" @change="computedFilter"><label for="filterpriceactive">par prix</label>
-    <br><input type="checkbox" v-model="filterNameActive" id="filternameactive" @change="computedFilter"><label for="filternameactive">par nom</label>
-    <br><input type="checkbox" v-model="filterStockActive" id="filterstockactive" @change="computedFilter"><label for="filterstockeactive" >par stock</label>
-    <hr />
-    <div v-if="filterPriceActive">
-      <label for="filterprice">prix inférieur à : </label><input v-model="priceFilter" id="filterprice" @input="computedFilter">
+    <br><input type="checkbox" v-model="filterPriceActive" id="filterpriceactive" @change="computedFilter" class="filter-checkbox"><label for="filterpriceactive">par prix</label>
+    <br><input type="checkbox" v-model="filterNameActive" id="filternameactive" @change="computedFilter" class="filter-checkbox"><label for="filternameactive">par nom</label>
+    <br><input type="checkbox" v-model="filterStockActive" id="filterstockactive" @change="computedFilter" class="filter-checkbox"><label for="filterstockeactive">par stock</label>
+    <hr class="divider"/>
+
+    <div v-if="filterPriceActive" class="filter-group">
+      <label for="filterprice">Prix inférieur à : </label><input v-model="priceFilter" id="filterprice" @input="computedFilter" class="filter-input">
     </div>
-    <div v-if="filterNameActive">
-      <label for="filtername">Nom contenant : </label><input type="text" v-model="nameFilter" id="filtername" @input="computedFilter" >
+    <div v-if="filterNameActive" class="filter-group">
+      <label for="filtername">Nom contenant : </label><input type="text" v-model="nameFilter" id="filtername" @input="computedFilter" class="filter-input">
     </div>
-    <div v-if="filterStockActive">
+    <div v-if="filterStockActive" class="filter-group">
       <label for="filterstock">En stock :</label>
-      <input type="radio" v-model="stockFilter" name="filterstock" id="filterstockyes" :value="true" >
+      <input type="radio" v-model="stockFilter" name="filterstock" id="filterstockyes" :value="true" class="filter-radio">
       <label for="filterstockyes">Oui</label>
-      <input type="radio" v-model="stockFilter" name="filterstock" id="filterstockno" :value="false">
+      <input type="radio" v-model="stockFilter" name="filterstock" id="filterstockno" :value="false" class="filter-radio">
       <label for="filterstockno">Non</label>
     </div>
-    <table>
+
+    <table class="virus-table">
       <thead>
-      <th>Nom</th>
-      <th>Prix</th>
+      <tr>
+        <th>Nom</th>
+        <th>Prix</th>
+      </tr>
       </thead>
       <tbody>
       <tr v-for="(virus, index) in computedFilter" :key="index">
@@ -33,10 +38,11 @@
       </tr>
       </tbody>
     </table>
-    <checked-list :data="computedFilter()" :fields="[ 'name', 'price' ]" :itemCheck="true" :itemButton="{'show':true, 'text':'buttonItem'}" :listButton="{'show':true, 'text':'buttonList'}" :checked="computedSelectedViruses()"
-                  @item-button-clicked="itemButtonClicked"  @list-button-clicked="listButtonChecked" @checked-changed="checkedChanged"></checked-list>
-  </div>
 
+    <checked-list :data="computedFilter()" :fields="[ 'name', 'price' ]" :itemCheck="true" :itemButton="{'show':true, 'text':'buttonItem'}" :listButton="{'show':true, 'text':'buttonList'}" :checked="computedSelectedViruses()"
+                  @item-button-clicked="itemButtonClicked" @list-button-clicked="listButtonChecked" @checked-changed="checkedChanged" class="checked-list">
+    </checked-list>
+  </div>
 </template>
 
 <script>
@@ -118,3 +124,66 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.viruses-view {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9fafb;
+  color: #3b4a63;
+  padding: 20px;
+}
+
+.page-title {
+  color: #D77A61;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.filter-description,
+.table-description {
+  color: #5f6368;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.filter-checkbox,
+.filter-radio,
+.filter-input {
+  margin: 10px 0;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.virus-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.virus-table th,
+.virus-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.virus-table th {
+  background-color: #f0f0f0;
+  color: #3b4a63;
+  font-weight: bold;
+}
+
+.checked-list {
+  margin-top: 30px;
+}
+
+hr.divider {
+  border: 0;
+  border-top: 1px solid #e0e0e0;
+  margin: 20px 0;
+}
+</style>
