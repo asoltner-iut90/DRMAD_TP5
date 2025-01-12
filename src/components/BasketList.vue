@@ -38,7 +38,7 @@ export default {
     ...mapState('shop', ['basket', 'shopUser', "loginError"]),
   },
   methods: {
-    ...mapActions('shop', ['getBasket', 'removeItemFromBasket', 'clearBasket', 'incredecrementItemAmount']),
+    ...mapActions('shop', ['getBasket', 'removeItemFromBasket', 'clearBasket']),
 
     async createOrder() {
       if (!this.shopUser || !this.basket.length) return;
@@ -66,9 +66,7 @@ export default {
       await this.clearBasket();
     },
 
-    async incredecrementItemAmount(itemId, nombre) {
-      await this.incredecrementItemAmount({ itemId, nombre });
-    }
+
   },
   created() {
     this.getBasket();
