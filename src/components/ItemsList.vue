@@ -14,7 +14,6 @@
         @checked-changed="checkedChanged"
     />
 
-    <h2>Panier</h2>
     <ul>
       <li v-for="(basketItem, index) in basket" :key="index">
         {{ basketItem.item.name }} - {{ basketItem.amount }} pièces - {{ basketItem.item.price }}€

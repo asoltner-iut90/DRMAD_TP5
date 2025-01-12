@@ -49,7 +49,63 @@ export default {
 </script>
 
 <style scoped>
-button {
+.shop-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f6f9; /* Couleur de fond douce */
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+.shop-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.logout-button {
+  background-color: transparent;
+  border: none;
+  color: #e74c3c;
   font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.logout-button:hover {
+  color: #c0392b; /* Rouge plus foncé lors du survol */
+}
+
+
+.navbar {
+  background-color: #3498db; /* Bleu pour la barre de navigation */
+  padding: 10px 20px;
+}
+
+.navbar button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 20px;
+  transition: color 0.3s ease;
+}
+
+.navbar button:hover {
+  color: #2980b9; /* Couleur de survol */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
+

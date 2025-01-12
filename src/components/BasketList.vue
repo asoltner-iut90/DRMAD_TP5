@@ -35,7 +35,7 @@ export default {
     CheckedList
   },
   computed: {
-    ...mapState('shop', ['basket','shopUser', "loginError"]),
+    ...mapState('shop', ['basket', 'shopUser', "loginError"]),
   },
   methods: {
     ...mapActions('shop', ['getBasket', 'removeItemFromBasket', 'clearBasket', 'incredecrementItemAmount']),
@@ -45,30 +45,27 @@ export default {
 
       const orderData = { items: this.basket };
 
-
       const response = await ShopService.CreateOrder(this.shopUser._id, orderData);
 
       if (response.error === 0 && response.data && response.data.uuid) {
         await this.clearBasket();
         await this.$router.push(`/shop/pay/${response.data.uuid}`);
       } else {
-        console.error('Erreur lors de la création de la commande:', response.message || response.data); // Log d'erreur plus détaillé
+        console.error('Erreur lors de la création de la commande:', response.message || response.data);
       }
     },
 
     async handleRemoveItem(index) {
       console.log('Suppression de l\'article avec ID:', this.basket[index].item._id);
-      const itemId = this.basket[index].item._id; // Utilisation de b.item._id ici
-      await this.removeItemFromBasket(itemId); // Suppression via mutation
+      const itemId = this.basket[index].item._id;
+      await this.removeItemFromBasket(itemId);
     },
 
     async handleClearBasket() {
       await this.clearBasket();
     },
 
-    // Ajout ou retrait d'une quantité
     async incredecrementItemAmount(itemId, nombre) {
-      // Appelle l'action de mise à jour sans récursion infinie
       await this.incredecrementItemAmount({ itemId, nombre });
     }
   },
@@ -83,6 +80,33 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   padding: 1rem;
+  background-color: #EFF1F3; /* Fond clair */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.basket-container h2 {
+  color: #223843; /* Couleur du titre */
+}
+
+.buy-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #D77A61; /* Fond orange */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buy-button:disabled {
+  background-color: #DBD3D8; /* Gris clair si désactivé */
+  cursor: not-allowed;
+}
+
+.buy-button:hover {
+  background-color: #D8B4A0; /* Fond plus clair au survol */
 }
 
 .quantity-buttons {
@@ -97,7 +121,7 @@ export default {
 
 .quantity-button, .remove-button {
   padding: 0.5rem;
-  background-color: #4CAF50;
+  background-color: #4CAF50; /* Vert pour ajouter */
   color: white;
   border: none;
   border-radius: 4px;
@@ -106,7 +130,7 @@ export default {
 }
 
 .remove-button {
-  background-color: #f44336;
+  background-color: #f44336; /* Rouge pour supprimer */
 }
 
 .remove-button:hover {
