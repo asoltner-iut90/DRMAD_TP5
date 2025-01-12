@@ -2,7 +2,7 @@
   <div>
     <NavBar :links="navLinks">
       <template v-slot:button-Logout>
-        <button style="background: none; border: none; color: red; cursor: pointer;">
+        <button  @click="handleLogout" style="background: none; border: none; color: red; cursor: pointer;">
           Logout
         </button>
       </template>
@@ -21,10 +21,9 @@ export default {
   name: "ShopView",
   components: { NavBar },
   computed: {
-    ...mapState("shop", ["shopUser"]), // Récupération de shopUser depuis le module shop du store
-    ...mapActions("shop", ["shopLogout"]), // Mutation pour déconnecter l'utilisateur
+    ...mapState("shop", ["shopUser"]),
     isLoggedIn() {
-      return this.shopUser !== null; // Vérifie si shopUser est non null
+      return this.shopUser !== null;
     },
     navLinks() {
       if (this.isLoggedIn) {
@@ -41,9 +40,9 @@ export default {
     },
   },
   methods: {
-
+    ...mapActions('shop', ['shopLogout']),
     handleLogout() {
-      this.shopLogout(); // Déconnexion via la mutation du store
+      this.shopLogout();
     },
   },
 };
