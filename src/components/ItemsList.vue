@@ -29,7 +29,7 @@
         :itemCheck="true"
         :itemButton="{ 'show': true, 'text': 'Ajouter au panier' }"
         :listButton="{ 'show': true, 'text': 'Ajouter sélection au panier' }"
-        :checked="Array.from({ length: viruses.length }, () => true)"
+        :checked="Array.from({ length: viruses.length }, () => false)"
         :itemAmount="true"
         @item-button-clicked="itemButtonClicked"
         @list-button-clicked="listButtonChecked"
