@@ -34,7 +34,7 @@ async function getAccount(number){
 }
 
 
-
+/*
 async function updateAccountAmount(data) {
     let response = null;
     try{
@@ -46,12 +46,18 @@ async function updateAccountAmount(data) {
     return response
 }
 
-function getAccountTransactionsFromLocalSource(number){
-    return LocalSource.getAccountTransactions(number)
+ */
+
+function getAccountTransactionsFromLocalSource(id){
+    return LocalSource.getAccountTransactions(id)
 }
 
-async function getAccountTransactions(number) {
-    return getAccountTransactionsFromLocalSource(number)
+async function getAccountTransactions(id) {
+    return getAccountTransactionsFromLocalSource(id)
+}
+
+function getAccountTransactionsByNumber(data){
+    return LocalSource.getAccountTransactionsByNumber(data)
 }
 
 async function addTransactionFromLocalSource(data){
@@ -76,7 +82,7 @@ async function addTransaction(AccountNumber, amount) {
 export default{
     getAccountAmount,
     getAccountTransactions,
-    updateAccountAmount,
     addTransaction,
     getAccount,
+    getAccountTransactionsByNumber,
 }

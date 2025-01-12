@@ -89,7 +89,7 @@
       },
     },
     async mounted() {
-      await this.getAccountTransactions(this.currentAccount.number);
+      await this.getAccountTransactions(this.currentAccount._id);
     }
   }
 </script>

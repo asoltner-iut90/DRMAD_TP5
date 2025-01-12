@@ -33,16 +33,24 @@ export default {
 
     // actions = fonctions asynchrone pour mettre à jour le state, en faisant appel aux mutations, via la fonction commit()
     actions: {
-        async getAccountTransactions({commit}, data) {
+        async getAccountTransactions({commit}, id) {
             console.log('recupération des transactions du compte');
-            let response = await BankService.getAccountTransactions(data)
+            let response = await BankService.getAccountTransactions({id})
             if (response.error === 0) {
-                console.log(response.data)
                 commit('updateAccountTransactions', response.data)
                 commit('updateAccountNumberError', 1)
             }
             else {
                 commit('updateAccountNumberError', -1)}
+        },
+
+        async getAccountTransactionsByNumber(number){
+            console.log(number)
+            let response = await BankService.getAccountTransactionsByNumber({number})
+            if (response.error === 0) {
+                return response.data
+            }
+            return null
         },
         /*
         async getAccountAmount({commit}, data) {
