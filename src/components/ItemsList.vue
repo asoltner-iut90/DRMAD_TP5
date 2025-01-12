@@ -25,7 +25,7 @@
 
     <checked-list
         :data="computedFilter()"
-        :fields="[ 'name', 'price', 'promotion' ]"
+        :fields="[ 'name', 'price', 'promotionText' ]"
         :itemCheck="true"
         :itemButton="{ 'show': true, 'text': 'Ajouter au panier' }"
         :listButton="{ 'show': true, 'text': 'Ajouter sélection au panier' }"
@@ -99,8 +99,33 @@ export default {
       if(this.filterPriceActive){
         if (this.priceFilter >0 ) viruses = viruses.filter(v => v.price < this.priceFilter)
       }
-      this.filteredViruses = viruses;
-      return viruses
+
+      let filtered = [];
+      for (let item of viruses) {
+        let data = {
+          _id:item._id,
+          name: item.name,
+          description: item.description,
+          links: item.links,
+          stock: item.stock,
+          wait: item.wait,
+          sold: item.sold,
+          price: item.price,
+          promotion: item.promotion,
+          promotionText: ""
+        }
+        if(data.promotion.length > 0){
+          let content = "";
+          for (let p of data.promotion) {
+            content += p.discount + "% pour " + p.amount+"|"
+          }
+          data.promotionText = content
+        }
+        filtered.push(data);
+      }
+
+      this.filteredViruses = filtered;
+      return filtered;
     },
 
     checkedChanged(index) {
