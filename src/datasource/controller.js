@@ -129,9 +129,13 @@ async function createOrder(userId, orderData) {
 
     let itemTotal = item.price * amount;
     if (item.promotion && item.promotion.length > 0) {
+      let bestPromotion = {amount:0, discount:0};
       item.promotion.forEach(promo => {
-        itemTotal -= promo.discount * promo.amount;
+        if (promo.amount <= amount && promo.amount > bestPromotion.amount) {
+          bestPromotion = promo;
+        }
       });
+      itemTotal -= itemTotal/100*bestPromotion.discount;
     }
     total += itemTotal;
   });
