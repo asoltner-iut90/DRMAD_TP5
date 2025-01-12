@@ -40,7 +40,7 @@ export default {
     ...mapState('shop', ['basket', 'shopUser', "loginError"]),
   },
   methods: {
-    ...mapActions('shop', ['getBasket', 'removeItemFromBasket', 'clearBasket']),
+    ...mapActions('shop', ['getBasket', 'removeItemFromBasket', 'clearBasket','updateOrders']),
 
     async createOrder() {
       if (!this.shopUser || !Array.isArray(this.basket) || !this.basket.length) return;  // Vérification de la validité du panier
@@ -51,6 +51,7 @@ export default {
       console.log(response);
 
       if (response.error === 0 && response.data && response.data.uuid) {
+        await this.updateOrders();
         await this.clearBasket();
         await this.$router.push(`/shop/pay/${response.data.uuid}`);
       } else {
