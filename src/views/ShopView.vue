@@ -32,7 +32,7 @@ export default {
           { label: "Mes Commandes", to: "/shop/orders" },
           { label: "Acheter", to: "/shop/buy" },
           { label: "Payer", to: "/shop/pay" },
-          { label: "Logout", to: "/shop/login" , action: this.handleLogout }, // Le slot personnalisera ce bouton
+          { label: "Logout", to: "/shop/login", action: this.handleLogout},
         ];
       } else {
         return [{ label: "Login", to: "/shop/login" }];
@@ -41,8 +41,9 @@ export default {
   },
   methods: {
     ...mapActions('shop', ['shopLogout']),
-    handleLogout() {
-      this.shopLogout();
+    async handleLogout() {
+      await this.shopLogout();
+      this.$router.push("/shop/login").catch(() => {});
     },
   },
 };

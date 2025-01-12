@@ -61,7 +61,9 @@ export default {
         async shopLogout({ commit }) {
             commit('updateShopUser', null);
             commit('updateBasket', []);
-                },
+            return { error: 0, status: 200, data: 'Déconnexion réussie' }
+        },
+
 
         async getBasket({ commit, state }) {
             console.log('Récupération du panier');
