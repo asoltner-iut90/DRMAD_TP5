@@ -16,9 +16,8 @@
         </template>
       </VerticalMenu>
 
-      <!-- Affichage central des composants via router-view -->
       <div class="content">
-        <router-view name="bankmain" />
+        <router-view />
       </div>
     </div>
   </div>
