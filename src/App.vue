@@ -8,8 +8,10 @@
         <img src="@/assets/bank.png" alt="Logo" style="height: 30px;" />
       </template>
     </NavBar>
-    <h1>Welcome to DrMad app</h1>
-    <router-view></router-view>
+    <router-view>
+
+    </router-view>
+
   </div>
 
 </template>

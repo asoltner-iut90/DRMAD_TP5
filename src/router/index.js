@@ -14,10 +14,16 @@ import BankOperation from "@/views/BankOperation.vue";
 // import BankHistory from "@/views/BankHistory.vue"; // Assurez-vous d'avoir ce composant si nécessaire
 import BankLogout from "@/views/BankLogout.vue";
 import BankHistory from "@/views/BankHistory.vue";
+import HomeView from "@/views/HomeView.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path:'/',
+    name:'home',
+    component: HomeView
+  },
   {
     path: '/shop',
     name: 'shop',
@@ -58,7 +64,7 @@ const routes = [
     path: "/bank",
     component: BankView,
     children: [
-      { path: "", component: BankHome, name: "BankHome" }, // La route par défaut
+      { path: "", component: BankHome, name: "BankHome" },
       { path: "account", component: BankAccount, name: "BankAccount" },
       { path: "amount", component: BankAmount, name: "BankAmount" },
       { path: "operation", component: BankOperation, name: "BankOperation" },
