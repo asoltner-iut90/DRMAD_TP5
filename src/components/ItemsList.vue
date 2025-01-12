@@ -79,15 +79,8 @@ export default {
     },
 
     async listButtonChecked(tab) {
-      for (let i = 0; i < tab.length; i++) {
-        if (tab[i].checked && tab[i].amount > 0) {
-          const newItem = {
-            item: this.filteredViruses[i],
-            amount: parseInt(tab[i].amount)
-          };
-          await this.addItemToBasket(newItem);
-          console.log(`Ajout de l'article ${this.filteredViruses[i].name} au panier, quantité : ${tab[i].amount}`);
-        }
+      for (let item of tab) {
+        await this.itemButtonClicked(item[0], item[1])
       }
     },
 
