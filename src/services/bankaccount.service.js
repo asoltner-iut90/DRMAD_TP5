@@ -65,18 +65,21 @@ async function addTransactionFromLocalSource(data){
 }
 
 async function addTransaction(AccountNumber, amount) {
-    let data = {number:AccountNumber, amount:amount};
+    console.log(AccountNumber);
+    console.log(amount);
+
+    let data = { account: AccountNumber, amount: amount };
     let response = null;
+
     try {
-        response = await addTransactionFromLocalSource(data);
-    }catch (err) {
-        response = {error: 1, status: 404, data: 'erreur réseau'}
+        response = await addTransactionFromLocalSource(data); // Appel du controller
+        console.log(response);
+    } catch (err) {
+        response = { error: 1, status: 404, data: 'erreur réseau' };
     }
-    return response
+
+    return response;
 }
-
-
-
 
 
 export default{

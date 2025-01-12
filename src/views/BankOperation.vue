@@ -9,7 +9,7 @@
       <input
           type="number"
           id="amount"
-          v-model="amount"
+          v-model.number="amount"
           placeholder="Saisir le montant"
       />
     </div>
@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import { addTransaction } from "@/services/bankaccount.service";
+import { mapState } from "vuex";
+import bankService from "@/services/bankaccount.service";
 
 export default {
   name: "BankOperation",
@@ -48,19 +49,23 @@ export default {
       errorMessage: "", // Message d'erreur
     };
   },
+  computed: {
+    ...mapState('bank', ['currentAccount']), // Récupération du compte courant depuis le store
+  },
   methods: {
     async validateOperation() {
-      // Vérification des champs obligatoires
       if (!this.amount || (this.hasRecipient && !this.recipient)) {
         this.errorMessage = "Veuillez saisir un montant valide et un destinataire si nécessaire.";
         setTimeout(() => (this.errorMessage = ""), 5000);
         return;
       }
 
+      if (this.hasRecipient){
+        this.amount = -this.amount;
+      }
       try {
-        // Appel de la fonction de service pour ajouter la transaction
-        const response = await addTransaction(
-            this.recipient || "current-account",
+        const response = await bankService.addTransaction(
+            this.recipient ? this.recipient : this.currentAccount.number,
             this.amount
         );
 
@@ -68,16 +73,11 @@ export default {
           throw new Error(response.data);
         }
 
-        // Affichage du message de succès avec l'UUID de la transaction
         this.successMessage = `L'opération est validée avec le n° : ${response.data.uuid}. Vous pouvez la retrouver dans l'historique.`;
         setTimeout(() => (this.successMessage = ""), 5000);
       } catch (error) {
-        // Gestion des erreurs : afficher le message d'erreur
-        this.errorMessage = `Erreur lors de l'opération : ${error.message}`;
         setTimeout(() => (this.errorMessage = ""), 5000);
       }
-
-      // Réinitialisation des champs après validation
       this.amount = null;
       this.hasRecipient = false;
       this.recipient = "";

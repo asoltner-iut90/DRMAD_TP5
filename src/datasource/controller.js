@@ -178,17 +178,30 @@ function updateAccountAmount(data) {
 
 function addTransaction(data) {
   let amount = data.amount;
-  let account = data.account;
-  let id = uuidv4()
+  let account = bankaccounts.find(b => b.number === data.account);
+  console.log('Account:', account);
+  let id = uuidv4();
+
   let transaction = {
     '_id': id,
-    'amount': -amount,
-    'account': account,
+    'amount': amount,
+    'account': account._id,
     'date': { $date: new Date() },
     'uuid': id
-  }
-  transactions.push(transaction)
+  };
+
+  transactions.push(transaction);
+  console.log('Transaction added:', transaction);
+  console.log('Transactions:', transactions);
+  // Retourne un objet avec les détails de la transaction
+  return {
+    error: 0,
+    status: 200,
+    data: { uuid: id, amount: amount }
+  };
+
 }
+
 
 
 export default{
