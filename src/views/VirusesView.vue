@@ -1,7 +1,6 @@
 <template>
   <div class="viruses-view">
     <h1 class="page-title">Les virus</h1>
-    <p class="table-description">Le tableau dans le store : {{ viruses }}</p>
     <p class="filter-description">Sous forme de liste avec certains champs</p>
 
     <span>Filtres :</span>
@@ -115,8 +114,6 @@ export default {
         this.selectedViruses.push(realIndex)
       }
     }
-
-
   },
   mounted(){
     this.computedFilter()

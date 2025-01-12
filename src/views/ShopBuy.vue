@@ -14,7 +14,8 @@ export default {
   components: {
     ItemsList,
     BasketList,
-  }
+  },
+
 };
 </script>
 
