@@ -2,7 +2,7 @@
   <div class="vertical-menu">
     <ul>
       <li v-for="(item, index) in items" :key="index" >
-        <slot v-if="item.type ==='type'" name="menu-title" :label="item.label">{{item.label}}</slot>
+        <slot v-if="item.type ==='title'" name="menu-title" :label="item.label">{{item.label}}</slot>
         <span v-else-if="item.type==='link'" @click="goTo(item.to)">
           <slot name="menu-link" :label="item.label">
               <button>{{item.label}}</button>
