@@ -60,9 +60,6 @@ function getAccountTransactionsByNumber(data){
     return LocalSource.getAccountTransactionsByNumber(data)
 }
 
-async function addTransactionFromLocalSource(data){
-    return LocalSource.addTransaction(data);
-}
 
 async function createWithdraw(data) {
     let response = null;
